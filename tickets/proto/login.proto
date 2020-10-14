@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message RegReq {
+  string id = 1; // id 用电话号码表示
+  string pwd = 2;
+  string verify = 3;
+}
+
+message LoginRsp {
+  bool ok = 1;
+  string errno = 2;
+}
