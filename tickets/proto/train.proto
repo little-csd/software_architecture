@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+message TrainReq {
+  string id = 1; // 用户手机号码
+  string fs = 2; // 出发车站
+  string ts = 3; // 目的车站
+  string day = 4; // 出发日期
+}
+
+message TrainRsp {
+  repeated Ticket tickets = 1;
+}
+
+message Ticket {
+  string kid = 1; // 车的 id
+  string fStation = 2;  // 出发站点
+  string tStation = 3;  // 到达站点
+  string fTime = 4; // 出发时间
+  string tTime = 5; // 到达时间
+  string duration = 6;  // 持续时间
+  string tid = 7; // 票的 id
+}
+
+message PriceReq {
+  string id = 1;
+  string tid = 2;
+}
+
+message PriceRsp {
+  repeated string prices = 1;
+}

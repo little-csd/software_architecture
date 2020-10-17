@@ -4,7 +4,7 @@ from time import sleep
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 
-station_name = 'station.txt'
+station_name = 'worm/station.txt'
 index_url = 'https://www.12306.cn/index/'
 js_new_window = 'window.open()'
 query_url = 'https://kyfw.12306.cn/otn/leftTicket/init?linktypeid=dc&fs={}&ts={}&date={}&flag=N,N,Y'
@@ -104,7 +104,43 @@ class Spider:
         self.driver = Chrome(chrome_options=create_opt())
         self.driver.get(index_url)
 
-# fromStationText
+from xpinyin import Pinyin
+ 
+def sort_by_pinyin(lis):
+    pin=Pinyin()
+    result=[]
+    for item in lis:
+        result.append((pin.get_pinyin(item),item))
+    result.sort()
+    for i in range(len(result)):
+        result[i]=result[i][1]
+    return result
+
+def postprocess_station():
+    pin = Pinyin()
+    s = ''
+    with open('station.txt') as f:
+        s = f.read()
+    d = eval(s)
+    m = {}
+    for k in d.keys():
+        item = pin.get_pinyin(k).upper()
+        t = m.get(item[0])
+        if t == None:
+            m[item[0]] = [k]
+        else:
+            t.append(k)
+    for k in m.keys():
+        lis = sort_by_pinyin(m[k])
+        m[k] = lis
+    tmp = sorted(m.items(),key=lambda x:x[0])
+    mm = {}
+    for item in tmp:
+        mm[item[0]] = item[1]
+    with open('station_post.txt', 'w') as f:
+        f.write(str(mm).replace('\'', '\"'))
+
+# fromS.tationText
 # toStationText
 # form_cities
 

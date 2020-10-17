@@ -1,12 +1,15 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:tickets/network/global.dart';
 
 class MainState implements Cloneable<MainState> {
-  // id = null 表示还未登录
-  String id;
+  int index = 0;
+  Map<String, dynamic> searchData = Map()..['id'] = id;
 
   @override
   MainState clone() {
-    return MainState()..id = id;
+    return MainState()
+      ..index = index
+      ..searchData = searchData;
   }
 }
 

@@ -2,7 +2,8 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tickets/network/login.dart';
+import 'package:tickets/network/global.dart';
+import 'package:tickets/network/request.dart';
 import 'package:tickets/tool/math.dart';
 
 import 'action.dart';
@@ -30,13 +31,14 @@ void _onSubmit(Action action, Context<LoginState> ctx) {
   }
 
   var data = ctx.state.data;
-  makeLogin(data).then((value) {
+  makeLoginReq(data).then((value) {
     if (value == null || value.ok != true) {
       Fluttertoast.showToast(msg: 'Password wrong');
       return;
     }
     Fluttertoast.showToast(msg: 'login success');
-    Navigator.of(ctx.context).popAndPushNamed('main', result: data['id']);
+    id = data['id'];
+    Navigator.of(ctx.context).popAndPushNamed('main');
   }, onError: (err) {
     Fluttertoast.showToast(msg: 'login failed, please check your network');
   });

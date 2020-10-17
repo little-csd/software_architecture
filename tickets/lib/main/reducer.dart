@@ -5,15 +5,10 @@ import 'state.dart';
 
 Reducer<MainState> buildReducer() {
   return asReducer(
-    <Object, Reducer<MainState>>{MainAction.loginReturn: _onLoginReturn},
+    <Object, Reducer<MainState>>{MainAction.pageChange: _onPageChange},
   );
 }
 
-MainState _onLoginReturn(MainState state, Action action) {
-  var data = action.payload as String;
-  print(data);
-  if (data == null || data.isEmpty) {
-    return state;
-  }
-  return state.clone()..id = data;
+MainState _onPageChange(MainState state, Action action) {
+  return state.clone()..index = action.payload;
 }
