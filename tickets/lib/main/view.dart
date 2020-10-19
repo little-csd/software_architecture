@@ -13,13 +13,14 @@ BottomNavigationBarItem _createBottomNavigationBarItem(
 }
 
 const _pageName = ['main', 'message', 'order', 'center'];
+final _controller = PageController();
 
 Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     body: PageView(
-      controller: PageController(),
+      controller: _controller,
       onPageChanged: (idx) {
-        print('page change to $idx');
+        print('Main: page change to $idx');
         dispatch(MainActionCreator.onPageChange(idx));
       },
       children: <Widget>[
@@ -38,27 +39,13 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
       ],
       currentIndex: state.index,
       onTap: (idx) {
-        print('tap index $idx');
+        print('Main: tap index $idx');
+        if (_controller.hasClients) {
+          _controller.jumpToPage(idx);
+        }
         dispatch(MainActionCreator.onPageChange(idx));
       },
       type: BottomNavigationBarType.fixed,
     ),
   );
 }
-
-/**
- * Column(
-    children: <Widget>[
-    Text('Hello main page'),
-    MaterialButton(
-    color: Colors.yellow,
-    onPressed: () {
-    if (state.id != null) {
-    print('you have login, id = ' + state.id);
-    // return;
-    }
-    dispatch(MainActionCreator.onLogin());
-    }),
-    ],
-    )
- */

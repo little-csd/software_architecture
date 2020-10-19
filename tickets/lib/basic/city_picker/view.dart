@@ -50,7 +50,7 @@ Widget _createListWidget(
         return _createTypeIndicator(name);
       } else {
         return _createCityItem(name, () {
-          print('click item $name');
+          print('CityPicker: click item $name');
           dispatch(CityPickerActionCreator.onOk(name));
         });
       }
@@ -74,10 +74,9 @@ Widget _createAlphabetList(
       height: 28,
       child: MaterialButton(
         onPressed: () {
-          print('you click item $txt');
+          print('CityPicker: you click item $txt');
           if (_controller.hasClients) {
             final offset = state.stoneList[i] * _itemHeight;
-            print(state.stoneList[i]);
             _controller.jumpTo(offset);
           }
         },

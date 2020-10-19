@@ -70,7 +70,6 @@ class _AdPageViewState extends State<AdPageView> {
             controller: _controller,
             itemBuilder: (context, idx) => images[idx],
             onPageChanged: (idx) {
-              print('hh $idx');
               setState(() {});
             },
             physics: const NeverScrollableScrollPhysics(),

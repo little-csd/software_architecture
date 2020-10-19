@@ -12,6 +12,6 @@ Reducer<SearchState> buildReducer() {
 SearchState _onStateChange(SearchState state, Action action) {
   SearchState newState = state.clone();
   newState.update(action.payload);
-  print('after update message = ${newState.data}');
+  print('Main: after update message = ${newState.data}');
   return newState;
 }

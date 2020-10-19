@@ -14,6 +14,6 @@ Reducer<LoginState> buildReducer() {
 LoginState _onStateChange(LoginState state, Action action) {
   var payload = action.payload;
   LoginState newState = state.clone()..update(payload);
-  print('state = ${newState.data}');
+  print('Login: state = ${newState.data}');
   return newState;
 }

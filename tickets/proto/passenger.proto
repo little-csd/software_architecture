@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message Passenger {
+  string name = 1;
+  bool male = 2;
+  string idCard = 3;
+}
+
+message PassengerAddReq {
+  string id = 1; // 手机号
+  repeated Passenger passengers = 2;
+}
+
+message PassengerAddRsp {
+  string errno = 1;
+}
+
+message PassengerGetReq {
+  string id = 1;
+}
+
+message PassengerGetRsp {
+  repeated Passenger passengers = 1;
+}

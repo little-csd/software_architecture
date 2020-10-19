@@ -61,8 +61,10 @@ def price():
     print('price request detected')
     data = json.loads(request.data)
     print('price request come in: {}'.format(data))
-    print('price request come in: {}'.format(data))
     prices = spider.get_price(data['id'], data['tid'])
+    print('generate prices = {}'.format(prices))
+    if len(prices) == 1 and prices[0] == '':
+        return PriceRsp().SerializeToString()
     rsp = PriceRsp()
     for s in prices:
         rsp.prices.append(s)

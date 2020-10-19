@@ -30,9 +30,9 @@ def read_station(uri):
 
 def create_opt():
     opt = Options()
-    opt.add_argument('--headless')
-    opt.add_argument('--disable-gpu')
-    opt.add_argument('blink-settings=imagesEnabled=false')
+    # opt.add_argument('--headless')
+    # opt.add_argument('--disable-gpu')
+    # opt.add_argument('blink-settings=imagesEnabled=false')
     return opt
 
 class Spider:
@@ -42,21 +42,23 @@ class Spider:
         ts = '{},{}'.format(ts,self.smap[ts])
         return query_url.format(fs,ts,date)
 
-    def make_web_element(self, key, fs, ts, date):
+    def make_handle(self, key):
         driver = self.driver
         driver.execute_script(js_new_window)
         h = driver.window_handles[-1]
         # print(driver.window_handles)
         self.hmap[key] = h
         driver.switch_to_window(h)
+    
+    def make_web_element(self, key, fs, ts, date):
+        driver = self.driver
+        self.qmap[key] = (fs,ts,date)
         url = self.make_url(fs, ts, date)
         driver.get(url)
-        sleep(0.5)
+        sleep(0.5) # 等待页面渲染完成
         l = driver.find_element_by_id('queryLeftTable')
         ll = l.find_elements_by_xpath('tr')
         self.wmap[key] = ll
-        # print(ll)
-        # for debug
         if len(ll) == 0:
             with open('output.html') as f:
                 f.write(driver.page_source)
@@ -76,9 +78,13 @@ class Spider:
     def pull(self, key, fs, ts, date):
         h = self.hmap.get(key)
         if h == None:
+            self.make_handle(key)
             self.make_web_element(key, fs, ts, date)
         else:
             self.driver.switch_to_window(h)
+            q = self.qmap.get(key)
+            if q[0] != fs or q[1] != ts or q[2] != date:
+                self.make_web_element(key, fs, ts, date)
         return self.get_train_msgs(key)
 
     # ukey: 用户 id, tkey 票的 id
@@ -94,14 +100,26 @@ class Spider:
                 break
         if w[i+1].is_displayed() == False:
             w[i].click()
+            sleep(0.5)
+        login_block = self.driver.find_element_by_class_name('modal-login')
+        # close_icon = login_block.find_element_by_class_name('close')
+        if login_block.is_displayed():
+            print('login block detected...')
+            self.driver.execute_script('$(\'.modal-login\').hide();$(\'.mask\').hide();')
+            # sleep(0.5)
+            # close_icon.click()
+            # sleep(0.5)
+            w[i].click()
             sleep(0.2)
         return w[i+1].text.split(' ')
 
     def __init__(self):
-        self.hmap = {} # handle map
+        self.hmap = {} # handle map，一个用户最多一个 handle
         self.wmap = {} # web element map, key 和上面相同, 都是 user 的 id
+        self.qmap = {} # 每次查询的内容， key 和上面相同
         self.smap = read_station(station_name)
         self.driver = Chrome(chrome_options=create_opt())
+        self.driver.maximize_window()
         self.driver.get(index_url)
 
 from xpinyin import Pinyin
@@ -140,7 +158,7 @@ def postprocess_station():
     with open('station_post.txt', 'w') as f:
         f.write(str(mm).replace('\'', '\"'))
 
-# fromS.tationText
+# fromStationText
 # toStationText
 # form_cities
 

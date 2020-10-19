@@ -25,7 +25,7 @@ void _onSubmit(Action action, Context<LoginState> ctx) {
   String pwd = ctx.state.data['pwd'];
   if (pwd == null || pwd.isEmpty) {
     String pwd = generateRandomString(10);
-    print('generate pwd = $pwd');
+    print('Login: generate pwd = $pwd');
     ctx.dispatch(LoginActionCreator.onStateChange({'pwd': pwd}));
     ctx.dispatch(LoginActionCreator.onSave());
   }
@@ -49,13 +49,13 @@ void _onSave(Action action, Context<LoginState> ctx) async {
   var data = ctx.state.data;
   instance.setString("id", data['id']);
   instance.setString("pwd", data['pwd']);
-  print('save data = $data');
+  print('Login: save data = $data');
 }
 
 void _onInit(Action action, Context<LoginState> ctx) async {
   SharedPreferences sp = await SharedPreferences.getInstance();
   String id = sp.getString('id'), pwd = sp.getString('pwd');
-  print('init: load id = $id pwd = $pwd');
+  print('Login: init: load id = $id pwd = $pwd');
   if (pwd != null) {
     ctx.dispatch(LoginActionCreator.onStateChange({
       'id': id,

@@ -17,7 +17,7 @@ Effect<CityPickerState> buildEffect() {
 
 void _onOk(Action action, Context<CityPickerState> ctx) {
   String name = action.payload;
-  print('city pick: $name');
+  print('CityPicker: pick city $name');
   Navigator.of(ctx.context).pop(name);
 }
 

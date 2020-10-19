@@ -9,7 +9,6 @@ class SearchState implements Cloneable<SearchState> {
 
   @override
   SearchState clone() {
-    print('cloning...');
     SearchState newState = new SearchState();
     newState.data.addAll(data);
     return newState;
@@ -21,6 +20,5 @@ class SearchState implements Cloneable<SearchState> {
 }
 
 SearchState initState(Map<String, dynamic> args) {
-  print('state init');
   return SearchState();
 }

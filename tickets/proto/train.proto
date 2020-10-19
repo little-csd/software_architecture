@@ -12,7 +12,7 @@ message TrainRsp {
 }
 
 message Ticket {
-  string kid = 1; // 车的 id
+  string kid = 1; // 车的编号
   string fStation = 2;  // 出发站点
   string tStation = 3;  // 到达站点
   string fTime = 4; // 出发时间
@@ -22,8 +22,8 @@ message Ticket {
 }
 
 message PriceReq {
-  string id = 1;
-  string tid = 2;
+  string id = 1; // 用户 id
+  string tid = 2; // 票(车次)的 id
 }
 
 message PriceRsp {

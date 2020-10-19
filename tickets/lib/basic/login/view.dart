@@ -129,7 +129,7 @@ Widget _buildLoginButton(
     textColor: Colors.white,
     child: Text('登录'),
     onPressed: () {
-      print('click button');
+      print('Login: click button');
       dispatch(LoginActionCreator.onSubmit());
     },
   );

@@ -9,10 +9,18 @@ import '../../customview/ad_page_view.dart';
 import 'state.dart';
 
 var _imageList = [
-  Image.asset('assets/logo.png'),
-  Image.asset('assets/logo.png'),
-  Image.asset('assets/logo.png'),
-  Image.asset('assets/logo.png'),
+  Image.asset(
+    'assets/ad1.png',
+  ),
+  Image.asset(
+    'assets/ad2.png',
+  ),
+  Image.asset(
+    'assets/ad3.png',
+  ),
+  Image.asset(
+    'assets/ad4.png',
+  ),
 ];
 
 const _centerIconPath = [
@@ -29,7 +37,7 @@ Widget _createHeaderIcon(IconData data, VoidCallback callback) {
     onPressed: callback,
     icon: Icon(
       data,
-      color: Colors.blue,
+      color: Colors.white,
     ),
   );
 }
@@ -38,15 +46,14 @@ Widget _createAppBar() {
   return AppBar(
     title: Text(
       '首页',
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.white),
     ),
-    backgroundColor: Colors.white,
     actions: <Widget>[
       _createHeaderIcon(Icons.search, () {
-        print('click search button');
+        print('Main: click search button');
       }),
       _createHeaderIcon(Icons.notifications, () {
-        print('click notification button');
+        print('Main: click notification button');
       }),
     ],
   );
@@ -73,8 +80,9 @@ Widget _createFromToText(
               child: Text(
                 src,
                 textAlign: TextAlign.center,
+                maxLines: 1,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -93,8 +101,9 @@ Widget _createFromToText(
               child: Text(
                 dst,
                 textAlign: TextAlign.center,
+                maxLines: 1,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -145,7 +154,7 @@ Widget _createExpandedTextWithStyle(String text, VoidCallback callback) {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 20,
           ),
         ),
       ),
@@ -198,11 +207,11 @@ Widget _createChooseWidget(
   return Row(
     children: <Widget>[
       _createExpandedRadio('仅动车', state.data['b_bullet'], (value) {
-        print('click bullet $value');
+        print('Main: click bullet $value');
         dispatch(SearchActionCreator.onStateChange({'b_bullet': value}));
       }),
       _createExpandedRadio('学生票', state.data['b_student'], (value) {
-        print('click student $value');
+        print('Main: click student $value');
         dispatch(SearchActionCreator.onStateChange({'b_student': value}));
       }),
     ],
@@ -268,7 +277,7 @@ Widget _createExpandedImage(String uri) {
     child: IconButton(
       padding: EdgeInsets.zero,
       icon: Image.asset(uri),
-      onPressed: () => print('click $uri'),
+      onPressed: () => print('Main: click $uri'),
     ),
   );
 }
@@ -314,27 +323,11 @@ Widget buildView(
         _createSearchWidget(state, dispatch, viewService),
         _createCenterIcons(),
         _createCenterIconText(),
-        AdPageView(_imageList),
+        Padding(
+          padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+          child: AdPageView(_imageList),
+        ),
       ],
     ),
   );
 }
-
-/**
- * TextField(
-    onChanged: (str) {
-    print('first text = $str');
-    dispatch(SearchActionCreator.onStateChange({'fs': str}));
-    },
-    ),
-    TextField(
-    onChanged: (str) {
-    print('second text = $str');
-    dispatch(SearchActionCreator.onStateChange({'ts': str}));
-    },
-    ),
-    FlatButton(
-    child: Text('search'),
-    onPressed: () => dispatch(SearchActionCreator.onSearch()),
-    ),
- * */

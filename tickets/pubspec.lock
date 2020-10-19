@@ -121,6 +121,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "7.1.1"
+  hb_password_input_textfield:
+    dependency: "direct main"
+    description:
+      name: hb_password_input_textfield
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   http:
     dependency: "direct main"
     description:

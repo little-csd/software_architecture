@@ -20,12 +20,12 @@ CityPickerState _onInit(CityPickerState state, Action action) {
     value.forEach((element) {
       itemList.add(CityItem(CityItemType.city, element));
     });
-    print('key = $key, len = ${value.length}');
+    // print('CityPicker: key = $key, len = ${value.length}');
   });
   newState.itemList = itemList;
-  print('read cities from local, total length = ${itemList.length}');
+  print(
+      'CityPicker: read cities from local, total length = ${itemList.length}');
 
-  print(data['A'].runtimeType);
   List<int> stoneList = new List(26)..fillRange(0, 26, 0);
   for (int i = 1; i < 26; i++) {
     String str = String.fromCharCode(i + 64);
@@ -33,7 +33,7 @@ CityPickerState _onInit(CityPickerState state, Action action) {
     stoneList[i] = stoneList[i - 1] + len;
   }
   newState.stoneList = stoneList;
-  print(stoneList);
+  print('CityPicker: $stoneList');
 
   return newState;
 }
